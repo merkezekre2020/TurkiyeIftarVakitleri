@@ -1,16 +1,64 @@
-# React + Vite
+# Ramazan Vakti 🌙
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ramazan Vakti, Türkiye'deki tüm il ve ilçeler için Diyanet İşleri Başkanlığı'na uyumlu namaz vakitlerini gösteren modern bir React web uygulamasıdır.
 
-Currently, two official plugins are available:
+## Özellikler ✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📍 **Dinamik İl ve İlçe Seçimi:** Türkiye'deki 81 il ve tüm ilçeler için hızlı, birbirine bağlı (cascading) konum seçimi. (Seçtiğiniz konum cihazınızda hatırlanır).
+- 🕒 **Namaz Vakitleri:** İmsak, Güneş, Öğle, İkindi, Akşam (İftar) ve Yatsı vakitlerinin özel ikonlar eşliğinde gösterimi.
+- ⏳ **Canlı Geri Sayım:** Bir sonraki namaz vaktine ne kadar kaldığını saniye saniye takip edin. İftar (Akşam) vaktine özel altın rengi vurgulama!
+- 🌓 **Karanlık/Aydınlık Mod:** Sistem tercihlerinize saygı duyan, istediğiniz zaman geçiş yapabileceğiniz göz yormayan, Ramazan ruhuna uygun yeşil ve altın sarısı tonlarında şık tasarım.
+- ⚡ **Hızlı ve Modern:** Vite, React ve Tailwind CSS ile inşa edilmiş performanslı yapı.
 
-## React Compiler
+## Kullanılan Teknolojiler 🛠️
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Stil:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **İkonlar:** [Lucide React](https://lucide.dev/)
+- **Tarih Yönetimi:** [date-fns](https://date-fns.org/)
+- **HTTP İstemcisi:** [Axios](https://axios-http.com/)
 
-## Expanding the ESLint configuration
+## API Servisleri 🌐
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Bu uygulama aşağıdaki ücretsiz ve açık kaynaklı API'leri kullanmaktadır:
+- **Konum Verisi:** [Türkiye API](https://turkiyeapi.dev/) (İl ve ilçe listesi için)
+- **Namaz Vakitleri:** [Aladhan API](https://aladhan.com/) (Diyanet İşleri Başkanlığı hesaplama metodu `method=13` kullanılarak)
+
+## Kurulum ve Çalıştırma 🚀
+
+Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleyin:
+
+### Gereksinimler
+- Node.js (v18 veya üzeri önerilir)
+
+### Adımlar
+
+1. Depoyu klonlayın:
+   ```bash
+   git clone <repo-url>
+   cd <repo-klasoru>
+   ```
+
+2. Bağımlılıkları yükleyin:
+   ```bash
+   npm install
+   ```
+
+3. Geliştirme sunucusunu başlatın:
+   ```bash
+   npm run dev
+   ```
+
+4. Tarayıcınızda uygulamayı görüntüleyin:
+   Genellikle `http://localhost:5173` adresinde çalışacaktır.
+
+### Üretime Hazırlama (Build)
+
+Uygulamayı canlı ortama hazırlamak için:
+```bash
+npm run build
+```
+Oluşturulan optimize edilmiş dosyalar `dist` klasörü içerisinde yer alacaktır.
+
+---
+*Geliştirme aşamasındadır.*
