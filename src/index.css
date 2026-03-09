@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ramadan-green-light: #4ade80;
+  --color-ramadan-green: #16a34a;
+  --color-ramadan-green-dark: #15803d;
+
+  --color-ramadan-gold-light: #fde047;
+  --color-ramadan-gold: #eab308;
+  --color-ramadan-gold-dark: #ca8a04;
+
+  --color-ramadan-bg-dark: #0f172a;
+  --color-ramadan-card-dark: #1e293b;
+  --color-ramadan-bg-light: #f8fafc;
+  --color-ramadan-card-light: #ffffff;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply bg-ramadan-bg-light text-slate-800 transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply bg-ramadan-bg-dark text-slate-200;
+  }
+}
