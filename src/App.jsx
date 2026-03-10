@@ -14,6 +14,13 @@ function App() {
   const [timings, setTimings] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const getTodayString = () => {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  };
+
+  const [selectedDate, setSelectedDate] = useState(getTodayString());
+
   // Current and Next Vakit Logic
   const [currentVakit, setCurrentVakit] = useState('');
   const [nextVakit, setNextVakit] = useState('');
@@ -84,7 +91,11 @@ function App() {
     const fetchTimings = async () => {
       if (selectedProvince && selectedDistrict) {
         setLoading(true);
-        const times = await getPrayerTimes(selectedProvince.name, selectedDistrict.name);
+        // Format date from YYYY-MM-DD to DD-MM-YYYY for the API
+        const [year, month, day] = selectedDate.split('-');
+        const formattedDate = `${day}-${month}-${year}`;
+
+        const times = await getPrayerTimes(selectedProvince.name, selectedDistrict.name, formattedDate);
         setTimings(times);
         setLoading(false);
 
@@ -95,11 +106,13 @@ function App() {
     };
 
     fetchTimings();
-  }, [selectedProvince, selectedDistrict]);
+  }, [selectedProvince, selectedDistrict, selectedDate]);
+
+  const isToday = selectedDate === getTodayString();
 
   // Calculate Next Vakit
   useEffect(() => {
-    if (!timings) return;
+    if (!timings || !isToday) return;
 
     const calculateVakit = () => {
       const now = new Date();
@@ -144,7 +157,7 @@ function App() {
       window.removeEventListener('vakit-changed', calculateVakit);
       clearInterval(interval);
     };
-  }, [timings]);
+  }, [timings, isToday]);
 
   const toggleDarkMode = () => {
     setDarkMode(prev => {
@@ -167,6 +180,11 @@ function App() {
 
   const handleDistrictChange = (district) => {
     setSelectedDistrict(district);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setTimings(null);
   };
 
   return (
@@ -216,6 +234,8 @@ function App() {
           districts={districts}
           selectedDistrict={selectedDistrict}
           onDistrictChange={handleDistrictChange}
+          selectedDate={selectedDate}
+          onDateChange={handleDateChange}
           loading={loading}
         />
 
@@ -227,7 +247,7 @@ function App() {
         ) : timings && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Countdown Banner */}
-            {nextVakitTime && (
+            {isToday && nextVakitTime && (
               <Countdown
                 nextVakit={vakitTranslations[nextVakit] || nextVakit}
                 targetTime={nextVakitTime}
@@ -235,10 +255,16 @@ function App() {
               />
             )}
 
+            {!isToday && (
+              <div className="bg-ramadan-card-light dark:bg-ramadan-card-dark p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 w-full mb-8 text-center text-slate-600 dark:text-slate-400">
+                 Seçilen tarih <strong>{selectedDate.split('-').reverse().join('.')}</strong> için vakitler gösterilmektedir.
+              </div>
+            )}
+
             {/* Vakit Cards Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {vakitList.map((vakit) => {
-                const isNext = vakit === nextVakit;
+                const isNext = isToday && vakit === nextVakit;
                 const isIftar = vakit === 'Maghrib';
 
                 return (
