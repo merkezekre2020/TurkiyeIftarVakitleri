@@ -20,13 +20,18 @@ export const getProvinces = async () => {
 };
 
 // Get timings by city and district using Aladhan API with method 13 (Diyanet)
-export const getPrayerTimes = async (province, district) => {
+export const getPrayerTimes = async (province, district, dateStr = null) => {
   try {
     // Determine the address to send. The API works well with standard city names
     // District + Province usually gives the best result
     const address = `${district}, ${province}, Turkey`;
 
-    const response = await axios.get('https://api.aladhan.com/v1/timingsByAddress', {
+    // Aladhan API accepts DD-MM-YYYY format for the date parameter
+    const endpoint = dateStr
+      ? `https://api.aladhan.com/v1/timingsByAddress/${dateStr}`
+      : 'https://api.aladhan.com/v1/timingsByAddress';
+
+    const response = await axios.get(endpoint, {
       params: {
         address: address,
         method: 13, // Diyanet İşleri Başkanlığı

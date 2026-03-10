@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Navigation } from 'lucide-react';
+import { MapPin, Navigation, Calendar } from 'lucide-react';
 
 const LocationSelector = ({
   provinces,
@@ -8,11 +8,34 @@ const LocationSelector = ({
   districts,
   selectedDistrict,
   onDistrictChange,
+  selectedDate,
+  onDateChange,
   loading
 }) => {
   return (
     <div className="bg-ramadan-card-light dark:bg-ramadan-card-dark p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 w-full mb-8 transition-colors duration-300">
       <div className="flex flex-col md:flex-row gap-6">
+
+        {/* Date Select */}
+        <div className="flex-1 space-y-2">
+          <label
+            htmlFor="date-select"
+            className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 ml-1"
+          >
+            <Calendar size={16} className="text-ramadan-green dark:text-ramadan-green-light" />
+            Tarih
+          </label>
+          <div className="relative">
+            <input
+              type="date"
+              id="date-select"
+              value={selectedDate}
+              onChange={(e) => onDateChange(e.target.value)}
+              disabled={loading}
+              className="w-full appearance-none bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ramadan-green-light dark:focus:ring-ramadan-green disabled:opacity-50 transition-colors"
+            />
+          </div>
+        </div>
 
         {/* Province Select */}
         <div className="flex-1 space-y-2">
